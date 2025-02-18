@@ -80,8 +80,12 @@ class ParametersIsolatedPerturbator():
         # Using the compiled model, ask for the default value of each one
         params_defaults = {}
         for p in self.parameters:
-            p_def_val = compiled_model.defaultParameterValue(p)
-            params_defaults[p] = p_def_val
+            try: # paramers might not have a default value!
+                p_def_val = compiled_model.defaultParameterValue(p)              
+                params_defaults[p] = p_def_val
+            except:
+                # nothing
+                print("Parameter:" + p + " does not have a default value")
         return params_defaults
 
 

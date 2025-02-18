@@ -150,7 +150,11 @@ def valueElementForParamAndXMLTree(param_name, xml_tree):
 def parameterValueInModelicaXML(param_name, xml_tree):
     param_value_element = valueElementForParamAndXMLTree(param_name, xml_tree)
     # Get val from element
-    param_val = param_value_element.attrib["start"]
+    try:
+      param_val = param_value_element.attrib["start"]
+    except:
+      error_msg = "Parameter {0} has no start value! Please remove it from the analysis!".format(param_name)
+      raise Exception(error_msg)
     # Cast it to its type
     param_val_casted = castModelicaValue(param_val, param_value_element)
     return param_val_casted
